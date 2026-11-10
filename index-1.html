@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101225" />
+  <title>Nova — Welcome</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+    :root { color-scheme: dark; --bg:#0b0d19; --panel:#14172a; --muted:#9298b5; --text:#f6f7ff; --accent:#8b7cff; --accent2:#52d6c7; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font-family:'DM Sans',sans-serif; color:var(--text); background:radial-gradient(ellipse at 15% 15%,#29245b 0,transparent 35%),radial-gradient(ellipse at 90% 85%,#123b46 0,transparent 32%),var(--bg); display:grid; place-items:center; padding:28px; }
+    .shell { width:min(100%,980px); min-height:620px; display:grid; grid-template-columns:1fr 1fr; overflow:hidden; border:1px solid #ffffff18; border-radius:28px; background:#111426d9; box-shadow:0 30px 100px #0008; backdrop-filter:blur(18px); }
+    .hero { position:relative; padding:54px 48px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; background:linear-gradient(145deg,#6659d8 0%,#36306f 48%,#172c49 100%); }
+    .hero:before,.hero:after { content:""; position:absolute; border:1px solid #ffffff22; border-radius:50%; width:390px;height:390px;right:-160px;top:120px; }
+    .hero:after { width:270px;height:270px;right:-100px;top:180px; }
+    .brand { display:flex;align-items:center;gap:11px;font:700 21px 'Space Grotesk';letter-spacing:-.5px;position:relative;z-index:1; }
+    .brand-mark { width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#fff,#b7f5ee);display:grid;place-items:center;color:#342d70;font-weight:700; }
+    .hero-copy { position:relative;z-index:1;max-width:370px;margin:60px 0; }
+    .eyebrow { text-transform:uppercase;letter-spacing:2.5px;font-size:11px;font-weight:700;color:#d6d2ff; }
+    h1 { font:700 clamp(38px,5vw,56px)/1.05 'Space Grotesk';letter-spacing:-2.5px;margin:18px 0; }
+    .hero-copy p { color:#e0defb;line-height:1.7;font-size:15px;max-width:340px; }
+    .hero-foot { position:relative;z-index:1;color:#d6d2ff;font-size:12px; }
+    .form-side { padding:54px 52px;display:flex;align-items:center;justify-content:center; }
+    .form-wrap { width:100%;max-width:360px; }
+    .form-wrap h2 { font:700 30px 'Space Grotesk';margin:0 0 8px;letter-spacing:-1px; }
+    .sub { color:var(--muted);font-size:14px;margin:0 0 28px; }
+    .switch { display:flex;background:#0d1020;padding:5px;border-radius:12px;margin-bottom:25px; }
+    .switch button { flex:1;border:0;background:transparent;color:#9da3bf;padding:11px;border-radius:9px;font:600 13px 'DM Sans';cursor:pointer;transition:.2s; }
+    .switch button.active { background:#292b49;color:#fff;box-shadow:0 2px 10px #0003; }
+    label { display:block;font-size:12px;font-weight:600;color:#dfe1f3;margin:0 0 8px; }
+    .field { margin-bottom:17px; }
+    .input-wrap { position:relative; }
+    input { width:100%;border:1px solid #30344f;background:#0d1020;color:#fff;border-radius:11px;padding:14px 15px;font:14px 'DM Sans';outline:none;transition:.2s; }
+    input::placeholder { color:#6f7592; }
+    input:focus { border-color:var(--accent);box-shadow:0 0 0 3px #8b7cff20; }
+    .toggle-pass { position:absolute;right:12px;top:50%;transform:translateY(-50%);border:0;background:none;color:#9298b5;font-size:12px;cursor:pointer; }
+    .row { display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;color:var(--muted);margin:4px 0 21px; }
+    .check { display:flex;align-items:center;gap:8px; }
+    .check input { width:14px;height:14px;accent-color:var(--accent); }
+    a { color:#aaa1ff;text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    .submit { width:100%;border:0;border-radius:11px;padding:14px;background:linear-gradient(100deg,#8b7cff,#6b8cff);color:white;font:700 14px 'DM Sans';cursor:pointer;box-shadow:0 8px 22px #7667ed35;transition:transform .2s,filter .2s; }
+    .submit:hover { transform:translateY(-1px);filter:brightness(1.08); }
+    .separator { display:flex;align-items:center;gap:13px;color:#717895;font-size:11px;margin:22px 0; }
+    .separator:before,.separator:after { content:"";height:1px;background:#30344b;flex:1; }
+    .social { width:100%;padding:12px;border:1px solid #343852;border-radius:11px;background:#171a2e;color:#e8eaff;font:600 13px 'DM Sans';cursor:pointer; }
+    .message { min-height:18px;margin:13px 0 0;font-size:12px;color:var(--accent2);text-align:center; }
+    .fine { text-align:center;color:#737995;font-size:11px;line-height:1.6;margin-top:20px; }
+    .hidden { display:none; }
+    @media(max-width:760px) { body{padding:14px}.shell{grid-template-columns:1fr;max-width:480px;min-height:auto}.hero{padding:27px 30px 24px;min-height:210px}.hero-copy{margin:35px 0 18px}.hero-copy h1{font-size:36px}.hero-copy p{font-size:13px;margin-bottom:0}.hero-foot{display:none}.form-side{padding:34px 30px 38px}.hero:before{top:30px}.hero:after{top:70px} }
+    @media(max-width:360px){.form-side{padding:28px 20px}.hero{padding:24px 22px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="brand"><span class="brand-mark">N</span> nova<span style="color:#b9f4ed">.</span></div>
+      <div class="hero-copy">
+        <div class="eyebrow">A better way to begin</div>
+        <h1>Make room<br>for what's next.</h1>
+        <p>One simple place to sign in, get started, and keep moving toward your goals.</p>
+      </div>
+      <div class="hero-foot">© 2026 Nova Studio. All rights reserved.</div>
+    </section>
+    <section class="form-side">
+      <div class="form-wrap">
+        <h2 id="heading">Welcome back</h2>
+        <p class="sub" id="subtitle">Enter your details to access your account.</p>
+        <div class="switch" role="tablist" aria-label="Account access">
+          <button id="loginTab" class="active" type="button" role="tab" aria-selected="true">Log in</button>
+          <button id="registerTab" type="button" role="tab" aria-selected="false">Create account</button>
+        </div>
+        <form id="authForm">
+          <div class="field hidden" id="nameField">
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="input-wrap">
+              <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" minlength="8" required>
+              <button class="toggle-pass" type="button" data-target="password">Show</button>
+            </div>
+          </div>
+          <div class="field hidden" id="confirmField">
+            <label for="confirm">Confirm password</label>
+            <div class="input-wrap">
+              <input id="confirm" name="confirm" type="password" placeholder="Enter password again" autocomplete="new-password" minlength="8">
+              <button class="toggle-pass" type="button" data-target="confirm">Show</button>
+            </div>
+          </div>
+          <div class="row" id="loginOptions">
+            <label class="check"><input type="checkbox" id="remember"> Remember me</label>
+            <a href="#" id="forgot">Forgot password?</a>
+          </div>
+          <div class="row hidden" id="termsRow">
+            <label class="check"><input type="checkbox" id="terms"> I agree to the terms</label>
+          </div>
+          <button class="submit" id="submitBtn" type="submit">Log in</button>
+          <div class="message" id="message" aria-live="polite"></div>
+        </form>
+        <div class="separator">OR CONTINUE WITH</div>
+        <button class="social" id="googleBtn" type="button">◎ &nbsp; Continue with Google</button>
+        <p class="fine">By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+      </div>
+    </section>
+  </main>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import {
+      getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect,
+      getRedirectResult, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+      sendPasswordResetEmail, updateProfile
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD0kCwJrUEofNBlNlXo38pzVX6_hff90Lg",
+      authDomain: "sign-in-bb8e8.firebaseapp.com",
+      projectId: "sign-in-bb8e8",
+      storageBucket: "sign-in-bb8e8.firebasestorage.app",
+      messagingSenderId: "714523619233",
+      appId: "1:714523619233:web:a45a7b0b12a96b521565e0",
+      measurementId: "G-PHQ8RXJDLG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
+    googleProvider.setCustomParameters({ prompt: "select_account" });
+    const $ = (id) => document.getElementById(id);
+    let mode = "login";
+
+    function showMessage(message, isError = false) {
+      $("message").style.color = isError ? "#ff9caa" : "var(--accent2)";
+      $("message").textContent = message;
+    }
+
+    function friendlyError(error) {
+      const messages = {
+        "auth/email-already-in-use": "This email already has an account. Try logging in.",
+        "auth/invalid-email": "Please enter a valid email address.",
+        "auth/weak-password": "Choose a password with at least 6 characters.",
+        "auth/invalid-credential": "Email or password is incorrect.",
+        "auth/user-disabled": "This account has been disabled.",
+        "auth/popup-closed-by-user": "The Google sign-in window was closed before finishing.",
+        "auth/popup-blocked": "Your browser blocked the sign-in popup. Please allow popups and try again.",
+        "auth/unauthorized-domain": "This website domain is not authorized in Firebase Authentication.",
+        "auth/operation-not-allowed": "This sign-in method is not enabled in Firebase Console.",
+        "auth/network-request-failed": "Network error. Check your internet connection and try again."
+      };
+      return messages[error.code] || error.message || "Something went wrong. Please try again.";
+    }
+
+    function setMode(next) {
+      mode = next;
+      const registering = mode === "register";
+      $("loginTab").classList.toggle("active", !registering);
+      $("registerTab").classList.toggle("active", registering);
+      $("loginTab").setAttribute("aria-selected", String(!registering));
+      $("registerTab").setAttribute("aria-selected", String(registering));
+      $("heading").textContent = registering ? "Create your account" : "Welcome back";
+      $("subtitle").textContent = registering ? "A few details and you’re ready to go." : "Enter your details to access your account.";
+      $("nameField").classList.toggle("hidden", !registering);
+      $("confirmField").classList.toggle("hidden", !registering);
+      $("termsRow").classList.toggle("hidden", !registering);
+      $("loginOptions").classList.toggle("hidden", registering);
+      $("submitBtn").textContent = registering ? "Create account" : "Log in";
+      $("password").autocomplete = registering ? "new-password" : "current-password";
+      showMessage("");
+      $("name").required = registering;
+      $("confirm").required = registering;
+      $("terms").required = registering;
+    }
+
+    $("loginTab").addEventListener("click", () => setMode("login"));
+    $("registerTab").addEventListener("click", () => setMode("register"));
+
+    document.querySelectorAll(".toggle-pass").forEach(btn => btn.addEventListener("click", () => {
+      const field = $(btn.dataset.target);
+      const show = field.type === "password";
+      field.type = show ? "text" : "password";
+      btn.textContent = show ? "Hide" : "Show";
+    }));
+
+    $("authForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const email = $("email").value.trim();
+      const password = $("password").value;
+      const submit = $("submitBtn");
+      submit.disabled = true;
+      submit.textContent = mode === "register" ? "Creating account..." : "Logging in...";
+      try {
+        if (mode === "register") {
+          if (password !== $("confirm").value) throw new Error("Your passwords do not match.");
+          if (!$("terms").checked) throw new Error("Please agree to the terms to continue.");
+          const credential = await createUserWithEmailAndPassword(auth, email, password);
+          await updateProfile(credential.user, { displayName: $("name").value.trim() });
+          showMessage("Account created! You're signed in as " + credential.user.email + ".");
+        } else {
+          const credential = await signInWithEmailAndPassword(auth, email, password);
+          showMessage("Welcome back, " + (credential.user.displayName || credential.user.email) + "!");
+        }
+      } catch (error) {
+        showMessage(friendlyError(error), true);
+      } finally {
+        submit.disabled = false;
+        submit.textContent = mode === "register" ? "Create account" : "Log in";
+      }
+    });
+
+    $("forgot").addEventListener("click", async (event) => {
+      event.preventDefault();
+      const email = $("email").value.trim();
+      if (!email) {
+        showMessage("Enter your email address first, then tap Forgot password.", true);
+        $("email").focus();
+        return;
+      }
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showMessage("Password reset email sent. Check your inbox.");
+      } catch (error) {
+        showMessage(friendlyError(error), true);
+      }
+    });
+
+    $("googleBtn").addEventListener("click", async () => {
+      try {
+        showMessage("Connecting to Google...");
+        // Redirect is more reliable than popups on mobile browsers.
+        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          await signInWithRedirect(auth, googleProvider);
+        } else {
+          const result = await signInWithPopup(auth, googleProvider);
+          showMessage("Signed in with Google as " + (result.user.email || "your Google account") + ".");
+        }
+      } catch (error) {
+        showMessage(friendlyError(error), true);
+      }
+    });
+
+    getRedirectResult(auth).then((result) => {
+      if (result?.user) {
+        showMessage("Signed in with Google as " + (result.user.email || "your Google account") + ".");
+      }
+    }).catch((error) => showMessage(friendlyError(error), true));
+  </script>
+</body>
+</html>
