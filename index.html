@@ -245,10 +245,18 @@
     });
 
     getRedirectResult(auth).then((result) => {
-      if (result?.user) {
-        showMessage("Signed in with Google as " + (result.user.email || "your Google account") + ".");
-      }
-    }).catch((error) => showMessage(friendlyError(error), true));
+  if (result?.user) {
+    window.location.href = "dashboard.html";
+  }
+}).catch((error) => {
+  showMessage(friendlyError(error), true);
+});
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    window.location.href = "dashboard.html";
+  }
+});
   </script>
 </body>
 </html>
