@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nova — Dashboard</title>
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;min-height:100vh;
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#0b0d19,#29245b,#123b46);
+color:white;display:grid;place-items:center;
+padding:20px
+}
+.card{
+width:100%;max-width:500px;
+background:#14172a;padding:35px;
+border:1px solid #ffffff20;
+border-radius:22px;text-align:center;
+}
+h1{color:#a99cff}
+p{color:#b8bdd5;line-height:1.6}
+button{
+background:linear-gradient(100deg,#8b7cff,#6b8cff);
+color:white;border:0;padding:13px 25px;
+border-radius:10px;font-weight:bold;
+cursor:pointer
+}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Welcome to Nova!</h1>
+<p id="welcome">Loading your account...</p>
+<button id="logout">Log out</button>
+</div>
+
+<script type="module">
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
+import {
+getAuth,onAuthStateChanged,signOut
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyD0kCwJrUEofNBlNlXo38pzVX6_hff90Lg",
+authDomain: "sign-in-bb8e8.firebaseapp.com",
+projectId: "sign-in-bb8e8",
+storageBucket: "sign-in-bb8e8.firebasestorage.app",
+messagingSenderId: "714523619233",
+appId: "1:714523619233:web:a45a7b0b12a96b521565e0",
+measurementId: "G-PHQ8RXJDLG"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+
+onAuthStateChanged(auth,user=>{
+if(user){
+document.getElementById("welcome").textContent=
+"Hello, "+(user.displayName||user.email)+"! You are logged in.";
+}else{
+window.location.replace("index.html");
+}
+});
+
+document.getElementById("logout").addEventListener("click",async()=>{
+await signOut(auth);
+window.location.replace("index.html");
+});
+</script>
+</body>
+</html>
