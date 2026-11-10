@@ -3,39 +3,127 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nova — Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova — Home</title>
 <style>
 *{box-sizing:border-box}
 body{
-margin:0;min-height:100vh;
-font-family:Arial,sans-serif;
-background:linear-gradient(135deg,#0b0d19,#29245b,#123b46);
-color:white;display:grid;place-items:center;
-padding:20px
+ margin:0;background:#0b0d19;color:#f6f7ff;
+ font-family:Arial,sans-serif;min-height:100vh;
+}
+header{
+ padding:20px 7%;display:flex;justify-content:space-between;
+ align-items:center;background:#14172a;border-bottom:1px solid #ffffff15;
+}
+.logo{font-size:25px;font-weight:bold;color:#a99cff}
+.logo span{color:#52d6c7}
+nav{display:flex;gap:10px;flex-wrap:wrap}
+button{
+ border:0;padding:11px 16px;border-radius:9px;
+ cursor:pointer;font-weight:bold;color:white;
+ background:#292b49;
+}
+button.active,.primary{background:linear-gradient(100deg,#8b7cff,#6b8cff)}
+main{max-width:1100px;margin:auto;padding:45px 22px}
+.welcome{
+ background:linear-gradient(120deg,#5146a9,#242d59);
+ padding:35px;border-radius:20px;margin-bottom:28px;
+}
+.welcome h1{font-size:32px;margin:0 0 12px}
+.welcome p{color:#e0defb;margin:0}
+.grid{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+ gap:18px;margin-top:25px
 }
 .card{
-width:100%;max-width:500px;
-background:#14172a;padding:35px;
-border:1px solid #ffffff20;
-border-radius:22px;text-align:center;
+ background:#14172a;border:1px solid #ffffff12;
+ padding:24px;border-radius:16px;min-height:130px
 }
-h1{color:#a99cff}
-p{color:#b8bdd5;line-height:1.6}
-button{
-background:linear-gradient(100deg,#8b7cff,#6b8cff);
-color:white;border:0;padding:13px 25px;
-border-radius:10px;font-weight:bold;
-cursor:pointer
+.card h3{color:#aaa1ff;margin-top:0}
+.card p{color:#aab0ca;line-height:1.6}
+.page{display:none}
+.page.active{display:block}
+.profile{
+ display:flex;align-items:center;gap:16px;margin-bottom:22px
+}
+.avatar{
+ width:65px;height:65px;border-radius:50%;
+ display:grid;place-items:center;font-size:26px;
+ background:linear-gradient(135deg,#8b7cff,#52d6c7)
+}
+footer{text-align:center;color:#747b9a;padding:30px;font-size:12px}
+@media(max-width:550px){
+ header{padding:17px;align-items:flex-start;gap:15px;flex-direction:column}
+ main{padding:25px 16px}
+ .welcome{padding:25px}
+ .welcome h1{font-size:26px}
 }
 </style>
 </head>
 <body>
-<div class="card">
-<h1>Welcome to Nova!</h1>
-<p id="welcome">Loading your account...</p>
-<button id="logout">Log out</button>
-</div>
+
+<header>
+ <div class="logo">NOVA<span>.</span></div>
+ <nav>
+  <button class="active" data-page="home">🏠 Home</button>
+  <button data-page="profile">👤 Profile</button>
+  <button data-page="settings">⚙️ Settings</button>
+  <button id="logout">Logout ↗</button>
+ </nav>
+</header>
+
+<main>
+
+<section class="page active" id="home">
+ <div class="welcome">
+  <h1>Welcome to Nova! 👋</h1>
+  <p>Your personal space. Everything starts here.</p>
+ </div>
+
+ <h2>Home Dashboard</h2>
+ <div class="grid">
+  <div class="card">
+   <h3>👤 Your Account</h3>
+   <p id="homeName">Loading...</p>
+  </div>
+  <div class="card">
+   <h3>📧 Email</h3>
+   <p id="homeEmail">Loading...</p>
+  </div>
+  <div class="card">
+   <h3>✨ Your Space</h3>
+   <p>Welcome to your Nova dashboard.</p>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="profile">
+ <h1>My Profile</h1>
+ <div class="card">
+  <div class="profile">
+   <div class="avatar">👤</div>
+   <div>
+    <h2 id="profileName">Loading...</h2>
+    <p id="profileEmail">Loading...</p>
+   </div>
+  </div>
+  <p>Account status: <strong>Active</strong></p>
+ </div>
+</section>
+
+<section class="page" id="settings">
+ <h1>Settings ⚙️</h1>
+ <div class="card">
+  <h3>Account Settings</h3>
+  <p>Manage your Nova account.</p>
+  <p id="settingsEmail">Loading...</p>
+  <button class="primary" id="settingsLogout">Log out</button>
+ </div>
+</section>
+
+</main>
+
+<footer>© 2026 Nova Studio. All rights reserved.</footer>
 
 <script type="module">
 import {initializeApp}
@@ -45,32 +133,52 @@ import {
 getAuth,onAuthStateChanged,signOut
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
-const firebaseConfig = {
-apiKey: "AIzaSyD0kCwJrUEofNBlNlXo38pzVX6_hff90Lg",
-authDomain: "sign-in-bb8e8.firebaseapp.com",
-projectId: "sign-in-bb8e8",
-storageBucket: "sign-in-bb8e8.firebasestorage.app",
-messagingSenderId: "714523619233",
-appId: "1:714523619233:web:a45a7b0b12a96b521565e0",
-measurementId: "G-PHQ8RXJDLG"
+const firebaseConfig={
+apiKey:"AIzaSyD0kCwJrUEofNBlNlXo38pzVX6_hff90Lg",
+authDomain:"sign-in-bb8e8.firebaseapp.com",
+projectId:"sign-in-bb8e8",
+storageBucket:"sign-in-bb8e8.firebasestorage.app",
+messagingSenderId:"714523619233",
+appId:"1:714523619233:web:a45a7b0b12a96b521565e0",
+measurementId:"G-PHQ8RXJDLG"
 };
 
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 
 onAuthStateChanged(auth,user=>{
-if(user){
-document.getElementById("welcome").textContent=
-"Hello, "+(user.displayName||user.email)+"! You are logged in.";
-}else{
-window.location.replace("index.html");
-}
+ if(!user){
+  window.location.replace("index.html");
+  return;
+ }
+
+ const name=user.displayName||user.email.split("@")[0];
+
+ document.getElementById("homeName").textContent=name;
+ document.getElementById("homeEmail").textContent=user.email;
+ document.getElementById("profileName").textContent=name;
+ document.getElementById("profileEmail").textContent=user.email;
+ document.getElementById("settingsEmail").textContent=user.email;
 });
 
-document.getElementById("logout").addEventListener("click",async()=>{
-await signOut(auth);
-window.location.replace("index.html");
+document.querySelectorAll("[data-page]").forEach(button=>{
+ button.addEventListener("click",()=>{
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll("[data-page]").forEach(b=>b.classList.remove("active"));
+
+  document.getElementById(button.dataset.page).classList.add("active");
+  button.classList.add("active");
+ });
 });
+
+async function logout(){
+ await signOut(auth);
+ window.location.replace("index.html");
+}
+
+document.getElementById("logout").addEventListener("click",logout);
+document.getElementById("settingsLogout").addEventListener("click",logout);
 </script>
 </body>
 </html>
+
